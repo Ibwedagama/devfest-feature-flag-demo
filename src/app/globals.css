@@ -9,7 +9,7 @@
 
 @layer utilities {
   .base-container {
-    @apply mx-auto max-w-4xl;
+    @apply mx-auto max-w-5xl;
   }
 }
 
@@ -53,7 +53,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: #24273a;
+  --background: #11111b;
   --foreground: #cad3f5;
   --card: #1e2030;
   --card-foreground: #cad3f5;
@@ -78,16 +78,16 @@
   --chart-5: #f5bde6;
   --sidebar: #1e2030;
   --sidebar-foreground: #cad3f5;
-  --sidebar-primary: #8aadf4;
+  --sidebar-primary: #c6a0f6;
   --sidebar-primary-foreground: #0f172a;
   --sidebar-accent: #494d64;
   --sidebar-accent-foreground: #cad3f5;
   --sidebar-border: #494d64;
-  --sidebar-ring: #8aadf4;
+  --sidebar-ring: #c6a0f6;
 }
 
 .dark {
-  --background: #24273a;
+  --background: #11111b;
   --foreground: #cad3f5;
   --card: #1e2030;
   --card-foreground: #cad3f5;
@@ -112,12 +112,12 @@
   --chart-5: #f5bde6;
   --sidebar: #1e2030;
   --sidebar-foreground: #cad3f5;
-  --sidebar-primary: #8aadf4;
+  --sidebar-primary: #c6a0f6;
   --sidebar-primary-foreground: #0f172a;
   --sidebar-accent: #494d64;
   --sidebar-accent-foreground: #cad3f5;
   --sidebar-border: #494d64;
-  --sidebar-ring: #8aadf4;
+  --sidebar-ring: #c6a0f6;
 }
 
 @layer base {
