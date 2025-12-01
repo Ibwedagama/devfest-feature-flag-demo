@@ -8,7 +8,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html className="dark min-h-screen">
       <body className="bg-background text-foreground pt-[--spacing-navbar]">
-        <RemoteConfigLoader />
         <TheNavbar />
         {children}
       </body>

@@ -8,6 +8,7 @@ import { TheFooter } from '@/components/the-footer'
 import { useEffect, useState } from 'react'
 import { activateRemoteConfig } from '@/lib/firebase.browser'
 import { activate, getValue, onConfigUpdate } from 'firebase/remote-config'
+import { FLAGS } from '@/lib/constant'
 
 export default function HomePage() {
   const [isMaintenance, setIsMaintenance] = useState(false)
@@ -16,25 +17,23 @@ export default function HomePage() {
   useEffect(() => {
     async function loadFlag() {
       const rc = await activateRemoteConfig()
-      const maintenanceValue = getValue(rc, 'kill_switch_is_maintenance')
-      setIsMaintenance(maintenanceValue.asBoolean())
+      setIsMaintenance(getValue(rc, FLAGS.KILL_SWITCH_IS_MAINTENANCE).asBoolean())
       setIsReady(true)
 
       // Enable Firebase Remote Config Realtime updates: listen for server-pushed changes
       onConfigUpdate(rc, {
         next: configUpdate => {
-          console.log('Updated keys:', configUpdate.getUpdatedKeys())
-          if (configUpdate.getUpdatedKeys().has('kill_switch_is_maintenance')) {
+          if (configUpdate.getUpdatedKeys().has(FLAGS.KILL_SWITCH_IS_MAINTENANCE)) {
             activate(rc).then(() => {
-              setIsMaintenance(getValue(rc, 'kill_switch_is_maintenance').asBoolean())
+              setIsMaintenance(getValue(rc, FLAGS.KILL_SWITCH_IS_MAINTENANCE).asBoolean())
             })
           }
         },
         error: error => {
-          console.log('Config update error:', error)
+          console.error('Config update error:', error)
         },
         complete: () => {
-          console.log('Listening stopped.')
+          console.warn('Listening stopped.')
         },
       })
     }
