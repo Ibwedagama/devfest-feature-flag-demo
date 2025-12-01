@@ -32,8 +32,9 @@ function getFirebaseRemoteConfig(): RemoteConfig {
   assertBrowser()
   if (!remoteConfigInstance) {
     remoteConfigInstance = getRemoteConfig(getFirebaseApp())
-    // Set the minimum fetch interval to 0 to fetch remote config on every page load for demo purposes
-    // Please use a reasonable value in production environment, the default is 60_000 or 60 seconds
+    // Set to 0 here so flag changes refresh every load during the demo. If you enable Firebase Remote
+    // Config Realtime, updates will stream automatically and you should raise this interval (default
+    // 60_000 ms) to avoid unnecessary polling in production.
     remoteConfigInstance.settings.minimumFetchIntervalMillis = 0
   }
   return remoteConfigInstance

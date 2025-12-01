@@ -7,7 +7,7 @@ import { PricingSection } from '@/components/pricing-section'
 import { TheFooter } from '@/components/the-footer'
 import { useEffect, useState } from 'react'
 import { activateRemoteConfig } from '@/lib/firebase.browser'
-import { getValue } from 'firebase/remote-config'
+import { activate, getValue, onConfigUpdate } from 'firebase/remote-config'
 
 export default function HomePage() {
   const [isMaintenance, setIsMaintenance] = useState(false)
@@ -19,7 +19,26 @@ export default function HomePage() {
       const maintenanceValue = getValue(rc, 'kill_switch_is_maintenance')
       setIsMaintenance(maintenanceValue.asBoolean())
       setIsReady(true)
+
+      // Enable Firebase Remote Config Realtime updates: listen for server-pushed changes
+      onConfigUpdate(rc, {
+        next: configUpdate => {
+          console.log('Updated keys:', configUpdate.getUpdatedKeys())
+          if (configUpdate.getUpdatedKeys().has('kill_switch_is_maintenance')) {
+            activate(rc).then(() => {
+              setIsMaintenance(getValue(rc, 'kill_switch_is_maintenance').asBoolean())
+            })
+          }
+        },
+        error: error => {
+          console.log('Config update error:', error)
+        },
+        complete: () => {
+          console.log('Listening stopped.')
+        },
+      })
     }
+
     loadFlag()
   }, [])
 
