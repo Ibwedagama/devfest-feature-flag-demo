@@ -1,15 +1,14 @@
-import React from "react"
-import "@/app/globals.css"
-import { TheNavbar } from "@/components/the-navbar"
+import React from 'react'
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+import '@/app/globals.css'
+import { TheNavbar } from '@/components/the-navbar'
+import { RemoteConfigLoader } from '@/components/remote-config-loader'
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html className="min-h-screen dark">
+    <html className="dark min-h-screen">
       <body className="bg-background text-foreground pt-[--spacing-navbar]">
+        <RemoteConfigLoader />
         <TheNavbar />
         {children}
       </body>
