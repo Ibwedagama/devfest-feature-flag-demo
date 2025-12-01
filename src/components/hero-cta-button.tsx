@@ -1,26 +1,18 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { Button } from './ui/button'
 
 export default function HeroCTAButton() {
   const [shouldError, setShouldError] = useState(false)
 
-  useEffect(() => {
-    if (shouldError) {
-      // Trigger the route-level error boundary for maintenance mode demo.
-      throw new Error('Maintenance mode active: Start Reading blocked')
-    }
-  }, [shouldError])
+  if (shouldError) {
+    throw new Error('Internal server error')
+  }
 
   return (
-    <Button
-      size="lg"
-      className="font-bold"
-      onClick={() => setShouldError(true)}
-      aria-describedby="maintenance-note"
-    >
+    <Button size="lg" className="font-bold" onClick={() => setShouldError(true)}>
       Start Reading
     </Button>
   )
