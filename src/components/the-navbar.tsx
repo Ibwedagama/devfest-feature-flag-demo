@@ -1,7 +1,5 @@
 import Link from 'next/link'
 
-import { Button } from '@/components/ui/button'
-
 export function TheNavbar() {
   return (
     <header className="bg-background/80 fixed inset-x-0 top-0 z-50 border-b backdrop-blur">

@@ -1,6 +1,4 @@
-import Link from 'next/link'
-
-import { Button } from '@/components/ui/button'
+import HeroCTAButton from './hero-cta-button'
 
 export function HeroSection() {
   return (
@@ -26,9 +24,7 @@ export function HeroSection() {
             </p>
           </div>
           <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-            <Button size="lg" className="font-bold">
-              Start Reading
-            </Button>
+            <HeroCTAButton />
             <p className="text-muted-foreground text-sm">
               No credit card required. Cancel anytime.
             </p>
