@@ -12,8 +12,8 @@ export default function HomePage() {
   }
 
   return (
-    <main className="relative overflow-hidden bg-linear-to-b from-primary/5 via-background to-background">
-      <div className="base-container space-y-16 px-4 pb-20 pt-20 md:pt-24">
+    <main className="from-primary/5 via-background to-background relative overflow-hidden bg-linear-to-b">
+      <div className="base-container space-y-16 px-4 pt-20 pb-20 md:pt-24">
         <HeroSection />
         <PricingSection />
         <AboutUsSection />

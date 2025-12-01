@@ -9,9 +9,9 @@ export function MaintenancePage() {
         <div className="bg-destructive/20 text-destructive mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full">
           !
         </div>
-        <h1 className="mb-2 text-2xl font-semibold">We&apos;re performing maintenance</h1>
+        <h1 className="mb-2 text-2xl font-semibold">We&apos;re under maintenance</h1>
         <p className="text-muted-foreground mb-6 text-sm">
-          The app is temporarily unavailable while we resolve an issue. Please check back shortly.
+          We&apos;re fixing an issue right now. Thanks for your patience while we get back online.
         </p>
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Button size="lg" asChild>
