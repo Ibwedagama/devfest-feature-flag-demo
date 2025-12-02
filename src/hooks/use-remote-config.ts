@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 export default function useRemoteConfig() {
   const [isReady, setIsReady] = useState(false)
   const [isMaintenance, setIsMaintenance] = useState(false)
+  const [isDiscounted, setIsDiscounted] = useState(false)
 
   useEffect(() => {
     async function loadConfig() {
@@ -18,6 +19,7 @@ export default function useRemoteConfig() {
         await fetchAndActivate(rc)
 
         setIsMaintenance(getValue(rc, FLAGS.KILL_SWITCH_IS_MAINTENANCE).asBoolean())
+        setIsDiscounted(getValue(rc, FLAGS.RELEASE_DISCOUNTED_PRICING_SECTION).asBoolean())
         setIsReady(true)
 
         // Handle realtime config updates
@@ -26,6 +28,12 @@ export default function useRemoteConfig() {
             if (configUpdate.getUpdatedKeys().has(FLAGS.KILL_SWITCH_IS_MAINTENANCE)) {
               activate(rc).then(() => {
                 setIsMaintenance(getValue(rc, FLAGS.KILL_SWITCH_IS_MAINTENANCE).asBoolean())
+              })
+            }
+
+            if (configUpdate.getUpdatedKeys().has(FLAGS.RELEASE_DISCOUNTED_PRICING_SECTION)) {
+              activate(rc).then(() => {
+                setIsDiscounted(getValue(rc, FLAGS.RELEASE_DISCOUNTED_PRICING_SECTION).asBoolean())
               })
             }
           },
@@ -47,5 +55,6 @@ export default function useRemoteConfig() {
   return {
     isReady,
     isMaintenance,
+    isDiscounted,
   }
 }
