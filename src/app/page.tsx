@@ -1,6 +1,7 @@
 'use client'
 
 import { AboutUsSection } from '@/components/about-us-section'
+import { DiscountedPricingSection } from '@/components/discounted-pricing-section'
 import { HeroSection } from '@/components/hero-section'
 import { MaintenancePage } from '@/components/maintenance-page'
 import { PricingSection } from '@/components/pricing-section'
@@ -27,6 +28,7 @@ export default function HomePage() {
       <div className="base-container space-y-16 px-4 pt-20 pb-20 md:pt-24">
         <HeroSection />
         <PricingSection />
+        <DiscountedPricingSection />
         <AboutUsSection />
       </div>
       <TheFooter />

@@ -20,6 +20,7 @@ export default function useRemoteConfig() {
         setIsMaintenance(getValue(rc, FLAGS.KILL_SWITCH_IS_MAINTENANCE).asBoolean())
         setIsReady(true)
 
+        // Handle realtime config updates
         onConfigUpdate(rc, {
           next: configUpdate => {
             if (configUpdate.getUpdatedKeys().has(FLAGS.KILL_SWITCH_IS_MAINTENANCE)) {
