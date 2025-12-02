@@ -10,6 +10,9 @@ export default function useRemoteConfig() {
   const [isReady, setIsReady] = useState(false)
   const [isMaintenance, setIsMaintenance] = useState(false)
   const [isDiscounted, setIsDiscounted] = useState(false)
+  const [testimonialVariant, setTestimonialVariant] = useState<'variant-a' | 'variant-b'>(
+    'variant-a'
+  )
 
   useEffect(() => {
     async function loadConfig() {
@@ -20,6 +23,11 @@ export default function useRemoteConfig() {
 
         setIsMaintenance(getValue(rc, FLAGS.KILL_SWITCH_IS_MAINTENANCE).asBoolean())
         setIsDiscounted(getValue(rc, FLAGS.RELEASE_DISCOUNTED_PRICING_SECTION).asBoolean())
+        setTestimonialVariant(
+          getValue(rc, FLAGS.EXPERIMENT_TESTIMONIALS_SECTION).asString() as
+            | 'variant-a'
+            | 'variant-b'
+        )
         setIsReady(true)
 
         // Handle realtime config updates
@@ -34,6 +42,16 @@ export default function useRemoteConfig() {
             if (configUpdate.getUpdatedKeys().has(FLAGS.RELEASE_DISCOUNTED_PRICING_SECTION)) {
               activate(rc).then(() => {
                 setIsDiscounted(getValue(rc, FLAGS.RELEASE_DISCOUNTED_PRICING_SECTION).asBoolean())
+              })
+            }
+
+            if (configUpdate.getUpdatedKeys().has(FLAGS.EXPERIMENT_TESTIMONIALS_SECTION)) {
+              activate(rc).then(() => {
+                setTestimonialVariant(
+                  getValue(rc, FLAGS.EXPERIMENT_TESTIMONIALS_SECTION).asString() as
+                    | 'variant-a'
+                    | 'variant-b'
+                )
               })
             }
           },
@@ -56,5 +74,6 @@ export default function useRemoteConfig() {
     isReady,
     isMaintenance,
     isDiscounted,
+    testimonialVariant,
   }
 }
