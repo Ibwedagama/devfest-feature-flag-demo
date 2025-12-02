@@ -16,7 +16,6 @@ function getFirebaseApp(): FirebaseApp {
   if (!firebaseApp) {
     firebaseApp = initializeApp(firebaseConfig)
   }
-  console.log('firebaseApp', firebaseApp)
   return firebaseApp
 }
 

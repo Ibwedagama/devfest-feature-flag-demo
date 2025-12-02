@@ -13,32 +13,31 @@ export default function useRemoteConfig() {
   useEffect(() => {
     async function loadConfig() {
       const app = getFirebaseApp()
-      const rc = await initializeRemoteConfig(app)
+      try {
+        const rc = await initializeRemoteConfig(app)
+        await fetchAndActivate(rc)
 
-      if (!rc) {
-        return
+        setIsMaintenance(getValue(rc, FLAGS.KILL_SWITCH_IS_MAINTENANCE).asBoolean())
+        setIsReady(true)
+
+        onConfigUpdate(rc, {
+          next: configUpdate => {
+            if (configUpdate.getUpdatedKeys().has(FLAGS.KILL_SWITCH_IS_MAINTENANCE)) {
+              activate(rc).then(() => {
+                setIsMaintenance(getValue(rc, FLAGS.KILL_SWITCH_IS_MAINTENANCE).asBoolean())
+              })
+            }
+          },
+          error: error => {
+            console.error('Config update error:', error)
+          },
+          complete: () => {
+            console.warn('Listening stopped.')
+          },
+        })
+      } catch (error) {
+        console.error('Failed to initialize remote config:', error)
       }
-
-      await fetchAndActivate(rc)
-
-      setIsReady(true)
-      setIsMaintenance(getValue(rc, FLAGS.KILL_SWITCH_IS_MAINTENANCE).asBoolean())
-
-      onConfigUpdate(rc, {
-        next: configUpdate => {
-          if (configUpdate.getUpdatedKeys().has(FLAGS.KILL_SWITCH_IS_MAINTENANCE)) {
-            activate(rc).then(() => {
-              setIsMaintenance(getValue(rc, FLAGS.KILL_SWITCH_IS_MAINTENANCE).asBoolean())
-            })
-          }
-        },
-        error: error => {
-          console.error('Config update error:', error)
-        },
-        complete: () => {
-          console.warn('Listening stopped.')
-        },
-      })
     }
 
     loadConfig()

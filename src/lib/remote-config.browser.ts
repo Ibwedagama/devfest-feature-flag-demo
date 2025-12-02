@@ -7,7 +7,7 @@ async function initializeRemoteConfig(app: FirebaseApp) {
   const supported = await isSupported()
 
   if (!supported) {
-    return null
+    throw new Error('Remote config only supported in browser')
   }
 
   if (!remoteConfigInstance) {
