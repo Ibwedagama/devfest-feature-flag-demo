@@ -35,4 +35,4 @@ jobs:
           channelId: live
           projectId: devfest-feature-flag-demo
         env:
-          FIREBASE_CLI_EXPERIMENTS: webframeworksex
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
