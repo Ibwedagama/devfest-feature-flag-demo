@@ -2,7 +2,6 @@ import React from 'react'
 
 import '@/app/globals.css'
 import { TheNavbar } from '@/components/the-navbar'
-import { RemoteConfigLoader } from '@/components/remote-config-loader'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -1,6 +1,5 @@
 'use client'
 
-import { AboutUsSection } from '@/components/about-us-section'
 import { DiscountedPricingSection } from '@/components/discounted-pricing-section'
 import { HeroSection } from '@/components/hero-section'
 import { MaintenancePage } from '@/components/maintenance-page'

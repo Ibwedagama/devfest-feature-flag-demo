@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Quote, Star } from 'lucide-react'
+import { Quote } from 'lucide-react'
 
 const testimonialsVariantB = [
   {
