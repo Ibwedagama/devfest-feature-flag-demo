@@ -5,41 +5,10 @@ import { HeroSection } from '@/components/hero-section'
 import { MaintenancePage } from '@/components/maintenance-page'
 import { PricingSection } from '@/components/pricing-section'
 import { TheFooter } from '@/components/the-footer'
-import { useEffect, useState } from 'react'
-import { activateRemoteConfig } from '@/lib/firebase.browser'
-import { activate, getValue, onConfigUpdate } from 'firebase/remote-config'
-import { FLAGS } from '@/lib/constant'
+import useRemoteConfig from '@/hooks/use-remote-config'
 
 export default function HomePage() {
-  const [isMaintenance, setIsMaintenance] = useState(false)
-  const [isReady, setIsReady] = useState(false)
-
-  useEffect(() => {
-    async function loadFlag() {
-      const rc = await activateRemoteConfig()
-      setIsMaintenance(getValue(rc, FLAGS.KILL_SWITCH_IS_MAINTENANCE).asBoolean())
-      setIsReady(true)
-
-      // Enable Firebase Remote Config Realtime updates: listen for server-pushed changes
-      onConfigUpdate(rc, {
-        next: configUpdate => {
-          if (configUpdate.getUpdatedKeys().has(FLAGS.KILL_SWITCH_IS_MAINTENANCE)) {
-            activate(rc).then(() => {
-              setIsMaintenance(getValue(rc, FLAGS.KILL_SWITCH_IS_MAINTENANCE).asBoolean())
-            })
-          }
-        },
-        error: error => {
-          console.error('Config update error:', error)
-        },
-        complete: () => {
-          console.warn('Listening stopped.')
-        },
-      })
-    }
-
-    loadFlag()
-  }, [])
+  const { isReady, isMaintenance } = useRemoteConfig()
 
   if (!isReady) {
     return (
