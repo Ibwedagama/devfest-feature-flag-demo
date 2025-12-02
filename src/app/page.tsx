@@ -5,6 +5,8 @@ import { DiscountedPricingSection } from '@/components/discounted-pricing-sectio
 import { HeroSection } from '@/components/hero-section'
 import { MaintenancePage } from '@/components/maintenance-page'
 import { PricingSection } from '@/components/pricing-section'
+import { TestimonialsSectionVariantA } from '@/components/testimonials-section'
+import { TestimonialsSectionVariantB } from '@/components/testimonials-section-variant-b'
 import { TheFooter } from '@/components/the-footer'
 import useRemoteConfig from '@/hooks/use-remote-config'
 
@@ -29,6 +31,8 @@ export default function HomePage() {
         <HeroSection />
         {isDiscounted ? <DiscountedPricingSection /> : <PricingSection />}
         <AboutUsSection />
+        <TestimonialsSectionVariantA />
+        <TestimonialsSectionVariantB />
       </div>
       <TheFooter />
     </main>
