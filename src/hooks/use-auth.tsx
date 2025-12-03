@@ -9,12 +9,15 @@ import {
   signOut,
 } from 'firebase/auth'
 import { getFirebaseApp } from '@/lib/firebase'
+import { initializeAnalytics } from '@/lib/analytic.browser'
+import { Analytics, setUserProperties } from 'firebase/analytics'
 import {
   createContext,
   useCallback,
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react'
@@ -33,6 +36,24 @@ function AuthProvider({ children }: { children: ReactNode }) {
   const [isReady, setIsReady] = useState(false)
   const auth = useMemo(() => getAuth(getFirebaseApp()), [])
   const provider = useMemo(() => new GoogleAuthProvider(), [])
+  const analyticsRef = useRef<Analytics | null>(null)
+
+  useEffect(() => {
+    let isMounted = true
+
+    initializeAnalytics(getFirebaseApp())
+      .then(instance => {
+        if (!isMounted) return
+        analyticsRef.current = instance
+      })
+      .catch(error => {
+        console.warn('Analytics not initialized:', error)
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
@@ -42,6 +63,17 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
     return unsubscribe
   }, [auth])
+
+  useEffect(() => {
+    const analytics = analyticsRef.current
+    if (!analytics) return
+
+    // Any user that logged in using email @incentro.com is considered as internal user
+    const isInternal = user?.email?.endsWith('@incentro.com') ?? false
+
+    // Store as string to match analytics custom property expectations.
+    setUserProperties(analytics, { is_internal_user: String(isInternal) })
+  }, [user])
 
   const googleSignIn = useCallback(async () => {
     try {
