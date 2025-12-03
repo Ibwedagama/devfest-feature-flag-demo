@@ -11,7 +11,8 @@ import { TheFooter } from '@/components/the-footer'
 import useRemoteConfig from '@/hooks/use-remote-config'
 
 export default function HomePage() {
-  const { isReady, isMaintenance, isDiscounted, testimonialVariant } = useRemoteConfig()
+  const { isReady, isMaintenance, isAISummaryEnabled, isDiscounted, testimonialVariant } =
+    useRemoteConfig()
 
   if (!isReady) {
     return (
@@ -29,7 +30,7 @@ export default function HomePage() {
     <main className="from-primary/5 via-background to-background relative overflow-hidden bg-linear-to-b">
       <div className="base-container space-y-16 px-4 pt-20 pb-20 md:pt-24">
         <HeroSection />
-        <AISummarySection />
+        {isAISummaryEnabled ? <AISummarySection /> : null}
         {isDiscounted ? <DiscountedPricingSection /> : <PricingSection />}
         {testimonialVariant === 'variant-a' ? (
           <TestimonialsSectionVariantA />
